@@ -11,6 +11,7 @@ async def save_order(payload):
 
 def check_order(order_id: int, background_tasks: BackgroundTasks):
     status = "valide"
+    # ..../1
     verif_status = {'order_id':order_id, status:status}
     background_tasks.add_task(confirm_order, verif_status)
 
@@ -18,6 +19,7 @@ def confirm_order(verif_status):
     with httpx.Client() as client:
         response = client.post("endponit", json=verif_status)
     print(response.text)
+
 
 # add new order
 @router.post("/place_order")

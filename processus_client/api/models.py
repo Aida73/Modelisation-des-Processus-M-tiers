@@ -2,8 +2,8 @@ from pydantic import BaseModel
 from datetime import datetime
 
 
-class Client(BaseModel):
-    client_id: str
+class Provider(BaseModel):
+    provider_id: str
     name: str
 
 
@@ -13,7 +13,7 @@ class Order(BaseModel):
     status: str
     order_date: datetime
     service_delivery_date: datetime
-    client_id: str
+    provider_id: str
 
 class Devis(BaseModel):
     devis_id: str

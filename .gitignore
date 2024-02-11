@@ -1,2 +1,3 @@
 ./processus_fournisseur/pf_env/
+.env
 ./processus_client/pc_env/

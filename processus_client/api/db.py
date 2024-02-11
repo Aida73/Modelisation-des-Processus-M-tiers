@@ -13,10 +13,10 @@ DATABASE_URL = f'postgresql://{os.getenv('USER')}:{os.getenv('PASSWORD')}@proces
 engine = create_engine(DATABASE_URL)
 metadata = MetaData()
 
-clients = Table(
-    'clients',
+providers = Table(
+    'providers',
     metadata,
-    Column('client_id', String(50), primary_key=True),
+    Column('provider_id', String(50), primary_key=True),
     Column('name', String(20)),  
 )
 
@@ -28,17 +28,16 @@ orders = Table(
     Column('service', String(200)),
     Column('order_date', Datetime),
     Column('service_delivery_date', Datetime),  
-    Column('client_id', String(50), ForeignKey('clients')),
+    Column('provider_id', String(50), ForeignKey('providers')),
 )
 
 devis = Table(
     'devis',
     metadata,
-    Column('devis_id', String(50), primary_key=True),
+    Column('order_id', String(50), primary_key=True),
     Column('status', String(20)),
     Column('devis_date', Datetime),  
     Column('devis_delivery_date', Datetime),   
-    Column('order_id', String(50), ForeignKey('orders')),
 )
 
 realisations = Table(
@@ -49,6 +48,7 @@ realisations = Table(
     Column('status', String(20)),
     Column('realisation_date', Datetime)
 )
+
 
 
 metadata.create_all(engine)
