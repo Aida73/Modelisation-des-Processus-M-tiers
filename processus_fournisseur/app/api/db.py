@@ -1,15 +1,14 @@
-from sqlalchemy import (Column, Integer, MetaData, String, Table, Datetime,
+from sqlalchemy import (Column, Integer, MetaData, String, Table, DateTime,
                         create_engine, ForeignKey, Boolean)
 from databases import Database
 from dotenv import load_dotenv
 import os
 
-
 load_dotenv()
 
-
-
-DATABASE_URL = f'postgresql://{os.getenv('USER')}:{os.getenv('PASSWORD')}@process_db/process_db'
+USERNAME=os.getenv('USERNAME')
+PWD=os.getenv('PASSWORD')
+DATABASE_URL = f'postgresql://{USERNAME}:{PWD}@db/process_db'
 engine = create_engine(DATABASE_URL)
 metadata = MetaData()
 
@@ -26,9 +25,9 @@ orders = Table(
     Column('order_id', String(50), primary_key=True),
     Column('status', String(20)),
     Column('service', String(200)),
-    Column('order_date', Datetime),
-    Column('service_delivery_date', Datetime),  
-    Column('client_id', String(50), ForeignKey('clients')),
+    Column('order_date', DateTime),
+    Column('service_delivery_date', DateTime),  
+    Column('client_id', String(50), ForeignKey('clients.client_id')),
 )
 
 devis = Table(
@@ -36,18 +35,18 @@ devis = Table(
     metadata,
     Column('devis_id', String(50), primary_key=True),
     Column('status', String(20)),
-    Column('devis_date', Datetime),  
-    Column('devis_delivery_date', Datetime),   
-    Column('order_id', String(50), ForeignKey('orders')),
+    Column('devis_date', DateTime),  
+    Column('devis_delivery_date', DateTime),   
+    Column('order_id', String(50), ForeignKey('orders.order_id')),
 )
 
 realisations = Table(
     'realisaions',
     metadata,
     Column('realisation_id', String(50), primary_key=True),
-    Column('order_id', String(50), ForeignKey('devis')),
     Column('status', String(20)),
-    Column('realisation_date', Datetime)
+    Column('realisation_date', DateTime),
+    Column('order_id', String(50), ForeignKey('orders.order_id')),
 )
 
 
