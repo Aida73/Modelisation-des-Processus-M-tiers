@@ -7,7 +7,7 @@ class Service(BaseModel):
 
 class Client(BaseModel):
     client_id: str
-    name: str
+    username: str
 
 class Order(BaseModel):
     order_id: str

@@ -1,0 +1,23 @@
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand">Asab-Platforme</a>
+    <form class="d-flex" role="search">
+      <input
+        class="form-control me-2"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+      />
+      <a class="btn btn-lg btn-secondary fw-bold" (click)="logout()"
+        >Déconnexion</a
+      >
+      <!-- <button class="btn btn-outline-success" type="submit">
+        {{ userProfile?.username }}
+      </button> -->
+      <!-- <span class="fs-4 text-primary">{{ userProfile?.username }}</span> -->
+      <span class="d-sm-inline d-none fs-5 p-1">
+        {{ userProfile?.username}}
+      </span>
+    </form>
+  </div>
+</nav>

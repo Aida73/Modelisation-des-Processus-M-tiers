@@ -25,7 +25,7 @@ clients = Table(
     'clients',
     metadata,
     Column('client_id', String(50), primary_key=True),
-    Column('name', String(20)),  
+    Column('username', String(20)),  
 )
 
 orders = Table(

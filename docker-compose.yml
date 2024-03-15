@@ -53,5 +53,25 @@ services:
       DATABASE_URL: postgresql://myuser:mypassword@db/process_db
       RABBITMQ_URL: amqp://user:password@rabbitmq:5672/
 
+  ui_frontend:
+    build: 
+      context: ./ui_frontend/ui_frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - processus_client
+      - processus_fournisseur
+  
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8085:8080"
+    command:
+    - start-dev
+
 volumes:
   postgres_data:
