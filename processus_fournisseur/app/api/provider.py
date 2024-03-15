@@ -2,6 +2,8 @@ from fastapi import APIRouter, BackgroundTasks, HTTPException
 from .models import Order
 from .db_manager import *
 import httpx
+from .rabbit import RabbitMQSender
+
 
 router = APIRouter()
 
@@ -33,4 +35,9 @@ async def add_order(payload: Order, background_tasks: BackgroundTasks):
     return response
 
 
+@router.post("/message_rabbit")
+async def send_message(message):#payload: Order, background_tasks: BackgroundTasks):
+    # background_tasks.add_tasks(save_order, payload)
+    sender = await RabbitMQSender().send_commande_message(message)
+    return sender
 
