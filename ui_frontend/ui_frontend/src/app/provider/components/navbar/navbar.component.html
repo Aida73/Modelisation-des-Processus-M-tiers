@@ -1,1 +1,36 @@
-<p>navbar works!</p>
+<!-- <nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+    <a class="navbar-brand">Asab-Platforme</a>
+    <form class="d-flex" role="search">
+        <input
+        class="form-control me-2"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+        />
+        <a class="btn btn-lg btn-secondary fw-bold" (click)="logout()"
+        >Déconnexion</a
+        >
+        <span class="d-sm-inline d-none fs-5 p-1">
+        {{ userProfile?.username }}
+        </span>
+    </form>
+    </div> -->
+<nav>
+<ul class="nav justify-content-end">
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="#">Active</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Link</a>
+    </li>
+    <li class="nav-item">
+        <a class="btn btn-lg btn-secondary fw-bold" (click)="logout()"
+        >Déconnexion</a
+        >
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" aria-disabled="true"> {{ userProfile?.username }}</a>
+    </li>
+  </ul>
+</nav>

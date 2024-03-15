@@ -2,7 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ClientComponent } from './client.component';
 
-const routes: Routes = [{ path: '', component: ClientComponent }];
+const routes: Routes = [{ path: '', component: ClientComponent, children:[
+  { path: 'commandes', loadChildren: () => import('./pages/commandes/commandes.module').then(m => m.CommandesModule) },
+  { path: 'devis', loadChildren: () => import('./pages/devis/devis.module').then(m => m.DevisModule)},
+  { path: '', redirectTo: 'commandes', pathMatch: 'full'}
+  ]}
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

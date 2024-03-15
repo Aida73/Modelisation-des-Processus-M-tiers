@@ -3,7 +3,7 @@ import { KeycloakService } from 'keycloak-angular';
 import { KeycloakProfile } from 'keycloak-js';
 import { ROUTE } from '../models/route.model';
 
-const ROUTES: ROUTE[] = [
+export const ROUTES: ROUTE[] = [
   {
     path: '/provider/commandes',
     name: 'Commandes',
@@ -28,6 +28,8 @@ const ROUTES: ROUTE[] = [
   styleUrls: ['./provider.component.scss']
 })
 export class ProviderComponent {
+
+  sidebarExpanded = true;
   public isLoggedIn = false;
   public userProfile : KeycloakProfile | null = null;
   routes:ROUTE[]=ROUTES;

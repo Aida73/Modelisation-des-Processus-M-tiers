@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { KeycloakProfile } from 'keycloak-js';
+import { ROUTE } from '../models/route.model';
+import { ROUTES } from '../provider/provider.component';
 
 @Component({
   selector: 'app-client',
@@ -9,9 +11,10 @@ import { KeycloakProfile } from 'keycloak-js';
 })
 export class ClientComponent {
 
+  sidebarExpanded = true;
   public isLoggedIn = false;
   public userProfile : KeycloakProfile | null = null;
-
+  routes:ROUTE[]=ROUTES;
 
   constructor(private readonly keycloak: KeycloakService){}
 

@@ -1,0 +1,20 @@
+.content {
+    margin-left: 100px;
+    transition: 0.3s;
+    &.sidebarExpanded {
+      margin-left: 160px;
+    }
+}
+
+.g-sidenav-show {
+    display: flex;
+}
+
+.sidenav {
+    width: 280px;
+}
+
+.main-content {
+    flex-grow: 1; 
+    margin-left: -10%;
+}
