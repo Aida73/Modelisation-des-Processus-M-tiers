@@ -16,6 +16,14 @@ async def add_order(payload: Order, background_tasks: BackgroundTasks):
 
 
 @router.get("/message_rabbit")
-async def add_message():
-    result = await RabbitMQReceiver().receive_message_from_queue()
+async def add_message(queue):
+    result = await RabbitMQReceiver().receive_message_from_queue(queue)
     return result
+
+@router.post("/devis")
+async def post_devis(id_order, payload:Devis, background_tasks: BackgroundTasks):
+    background_tasks.add(add_devis, payload)
+    response = {
+        **payload.model_dump()
+    }
+    return response

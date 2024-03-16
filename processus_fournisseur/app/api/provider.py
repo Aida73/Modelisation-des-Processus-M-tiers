@@ -36,8 +36,8 @@ async def add_order(payload: Order, background_tasks: BackgroundTasks):
 
 
 @router.post("/message_rabbit")
-async def send_message(message):#payload: Order, background_tasks: BackgroundTasks):
+async def send_message(queue, message):#payload: Order, background_tasks: BackgroundTasks):
     # background_tasks.add_tasks(save_order, payload)
-    sender = await RabbitMQSender().send_commande_message(message)
+    sender = await RabbitMQSender().send_message(queue, message)
     return sender
 

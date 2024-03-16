@@ -20,12 +20,11 @@ class RabbitMQSender:
             finally:
                 pass
 
-    async def send_commande_message(self, message):
-
+    async def send_message(self, queue, message):
         try:
             async with self.get_connection() as channel:
                 json_to_send = json.dumps(message)
-                await self.send_message(channel, "commande", json_to_send)
+                await self.message(channel, queue, json_to_send)
                 logging.info("Sent command to queue")
                 return 200
 
@@ -33,7 +32,7 @@ class RabbitMQSender:
             logging.error("Error sending command to queue: %s", exception)
             return 500
 
-    async def send_message(self, channel, queue, message):
+    async def message(self, channel, queue, message):
         print(f"Sending message to queue in sender: {message}")
         queue = await channel.declare_queue(queue, durable=True)
         await channel.default_exchange.publish(
@@ -57,10 +56,10 @@ class RabbitMQReceiver:
             finally:
                 pass
 
-    async def receive_message_from_queue(self):
+    async def receive_message_from_queue(self, queue):
         try:
             async with self.get_connection() as channel:
-                json_to_send = await self.read_message(channel, "commande")
+                json_to_send = await self.read_message(channel, queue)
                 logging.info("Received message from queue")
                 return json_to_send
 
