@@ -4,7 +4,7 @@ from datetime import datetime
 
 # class Provider(BaseModel):
 #     provider_id: str
-#     name: str
+#     username: str
 
 class Client(BaseModel):
     client_id = str

@@ -2,16 +2,27 @@ version: '3.8'
 
 
 services:
-  db:
+  provider_db:
     image: postgres:12.1-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: ${USERNAME}
-      POSTGRES_PASSWORD: ${PASSWORD}
-      POSTGRES_DB: process_db
+      POSTGRES_USER: ${PROVIDER_USERNAME}
+      POSTGRES_PASSWORD: ${PROVIDER_PASSWORD}
+      POSTGRES_DB: provider_db
     ports:
       - "5433:5432"
+  
+  client_db:
+    image: postgres:12.1-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${CLIENT_USERNAME}
+      POSTGRES_PASSWORD: ${CLIENT_PASSWORD}
+      POSTGRES_DB: client_db
+    ports:
+      - "5434:5432"
 
   rabbitmq:
     build:
@@ -32,11 +43,11 @@ services:
     env_file:
       - .env
     depends_on:
-      - db
+      - client_db
       - rabbitmq
     restart: "on-failure"
     environment:
-      DATABASE_URL: postgresql://myuser:mypassword@db/process_db
+      DATABASE_URL: postgresql://myuser:mypassword@db/client_db
     
 
   processus_fournisseur:
@@ -48,11 +59,11 @@ services:
     env_file:
       - .env
     depends_on:
-      - db
+      - provider_db
       - rabbitmq
     restart: "on-failure"
     environment:
-      DATABASE_URL: postgresql://myuser:mypassword@db/process_db
+      DATABASE_URL: postgresql://myuser:mypassword@db/provider_db
 
   ui_frontend:
     build: 
@@ -72,7 +83,7 @@ services:
     ports:
       - "8085:8080"
     command:
-    - start-dev
+    - kc.sh start --optimized
 
 volumes:
   postgres_data:

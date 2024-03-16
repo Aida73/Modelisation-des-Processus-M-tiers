@@ -6,9 +6,9 @@ import os
 
 load_dotenv()
 
-USERNAME=os.getenv('USERNAME')
-PWD=os.getenv('PASSWORD')
-DATABASE_URL = f'postgresql://{USERNAME}:{PWD}@db/process_db'
+USERNAME=os.getenv('PROVIDER_USERNAME')
+PWD=os.getenv('PROVIDER_PASSWORD')
+DATABASE_URL = f'postgresql://{USERNAME}:{PWD}@db/provider_db'
 engine = create_engine(DATABASE_URL)
 metadata = MetaData()
 
