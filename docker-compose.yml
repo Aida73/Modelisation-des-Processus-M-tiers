@@ -49,7 +49,7 @@ services:
       - rabbitmq
     restart: "on-failure"
     environment:
-      DATABASE_URL: postgresql://myuser:mypassword@client_db/client_db
+      DATABASE_URL: postgresql://${CLIENT_USERNAME}:${CLIENT_PASSWORD}@client_db/client_db
     
 
   processus_fournisseur:
@@ -65,7 +65,7 @@ services:
       - rabbitmq
     restart: "on-failure"
     environment:
-      DATABASE_URL: postgresql://myuser:mypassword@provider_db/provider_db
+      DATABASE_URL: postgresql://${PROVIDER_USERNAME}:${PROVIDER_USERNAME}@provider_db/provider_db
 
   ui_frontend:
     build: 
