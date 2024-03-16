@@ -50,7 +50,7 @@ services:
     restart: "on-failure"
     command: ["./wait-for-it.sh", "client_db:5432", "--", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
     environment:
-      DATABASE_URL: postgresql://${CLIENT_USERNAME}:${CLIENT_PASSWORD}@client_db/client_db
+      DATABASE_URL: postgresql://myuser2:mypassword2@client_db/client_db
     
 
   processus_fournisseur:
@@ -67,7 +67,7 @@ services:
     restart: "on-failure"
     command: ["./wait-for-it.sh", "provider_db:5432", "--", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
     environment:
-      DATABASE_URL: postgresql://${PROVIDER_USERNAME}:${PROVIDER_USERNAME}@provider_db/provider_db
+      DATABASE_URL: postgresql://myuser:mypassword@provider_db/provider_db
 
   ui_frontend:
     build: 
