@@ -8,7 +8,7 @@ load_dotenv()
 
 USERNAME=os.getenv('PROVIDER_USERNAME')
 PWD=os.getenv('PROVIDER_PASSWORD')
-DATABASE_URL = f'postgresql://{USERNAME}:{PWD}@db/provider_db'
+DATABASE_URL = f'postgresql://{USERNAME}:{PWD}@provider_db/provider_db'
 engine = create_engine(DATABASE_URL)
 metadata = MetaData()
 

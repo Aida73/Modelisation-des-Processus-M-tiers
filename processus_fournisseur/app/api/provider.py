@@ -37,7 +37,7 @@ async def add_order(payload: Order, background_tasks: BackgroundTasks):
         'message': f"Votre commande numero a été bien reçue et est en cours de traitement",
     }
     with httpx.Client() as client:
-        response = client.post("client-endponit", json=payload)
+        response = client.post("http://localhost:8001/place_order", json=payload)
     return response
 
 @router.get("/orders")

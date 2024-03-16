@@ -5,22 +5,24 @@ services:
   provider_db:
     image: postgres:12.1-alpine
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_provider_data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: ${PROVIDER_USERNAME}
       POSTGRES_PASSWORD: ${PROVIDER_PASSWORD}
       POSTGRES_DB: provider_db
+    restart: "on-failure"
     ports:
-      - "5433:5432"
+      - "5437:5432"
   
   client_db:
     image: postgres:12.1-alpine
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_client_data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: ${CLIENT_USERNAME}
       POSTGRES_PASSWORD: ${CLIENT_PASSWORD}
       POSTGRES_DB: client_db
+    restart: "on-failure"
     ports:
       - "5434:5432"
 
@@ -47,7 +49,7 @@ services:
       - rabbitmq
     restart: "on-failure"
     environment:
-      DATABASE_URL: postgresql://myuser:mypassword@db/client_db
+      DATABASE_URL: postgresql://myuser:mypassword@client_db/client_db
     
 
   processus_fournisseur:
@@ -63,7 +65,7 @@ services:
       - rabbitmq
     restart: "on-failure"
     environment:
-      DATABASE_URL: postgresql://myuser:mypassword@db/provider_db
+      DATABASE_URL: postgresql://myuser:mypassword@provider_db/provider_db
 
   ui_frontend:
     build: 
@@ -83,7 +85,8 @@ services:
     ports:
       - "8085:8080"
     command:
-    - kc.sh start --optimized
+    - start-dev
 
 volumes:
-  postgres_data:
+  postgres_provider_data:
+  postgres_client_data:

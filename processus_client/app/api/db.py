@@ -10,7 +10,7 @@ load_dotenv()
 
 USERNAME=os.getenv('CLIENT_USERNAME')
 PWD=os.getenv('CLIENT_PASSWORD')
-DATABASE_URL = f'postgresql://{USERNAME}:{PWD}@db/client_db'
+DATABASE_URL = f'postgresql://{USERNAME}:{PWD}@client_db/client_db'
 engine = create_engine(DATABASE_URL)
 metadata = MetaData()
 
