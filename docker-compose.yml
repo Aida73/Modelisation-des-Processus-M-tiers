@@ -69,15 +69,15 @@ services:
     environment:
       DATABASE_URL: postgresql://myuser:mypassword@provider_db/provider_db
 
-  ui_frontend:
-    build: 
-      context: ./ui_frontend/ui_frontend
-      dockerfile: Dockerfile
-    ports:
-      - "4200:80"
-    depends_on:
-      - processus_client
-      - processus_fournisseur
+  # ui_frontend:
+  #   build: 
+  #     context: ./ui_frontend/ui_frontend
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "4200:80"
+  #   depends_on:
+  #     - processus_client
+  #     - processus_fournisseur
   
   keycloak:
     image: quay.io/keycloak/keycloak:latest
