@@ -6,12 +6,18 @@ from sqlalchemy import insert,select
 
 async def add_order(payload:Order):
     order_dict = payload.dict()
-    # if isinstance(order_dict['order_date'], datetime):
-    #     order_dict['order_date'] = order_dict['order_date'].isoformat()
+    if isinstance(order_dict['order_date'], datetime):
+        order_dict['order_date'] = order_dict['order_date'].isoformat()
     
-    # if order_dict['service_delivery_date'] is not None and isinstance(order_dict['service_delivery_date'], datetime):
-    #     order_dict['service_delivery_date'] = order_dict['service_delivery_date'].isoformat()
+    if order_dict['service_delivery_date'] is not None and isinstance(order_dict['service_delivery_date'], datetime):
+        order_dict['service_delivery_date'] = order_dict['service_delivery_date'].isoformat()
 
+    if isinstance(order_dict['order_date'], str):
+        order_dict['order_date'] = datetime.fromisoformat(order_dict['order_date'])
+    
+    if isinstance(order_dict['service_delivery_date'], str):
+        order_dict['service_delivery_date'] = datetime.fromisoformat(order_dict['service_delivery_date'])
+    
     query = orders.insert().values(**order_dict)
     print("query",query)
     return await database.execute(query=query)

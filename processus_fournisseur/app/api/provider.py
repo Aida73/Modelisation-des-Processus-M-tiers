@@ -38,7 +38,7 @@ async def new_order(payload: Order, background_tasks: BackgroundTasks):
         'message': f"Votre commande numero a été bien reçue et est en cours de traitement",
     }
     with httpx.Client() as client:
-        response = client.post("http://localhost:8001/place_order", json=payload.dict())
+        response = client.post("http://localhost:8001/place_order", json=payload)
         print(response.text)
     return response
 
