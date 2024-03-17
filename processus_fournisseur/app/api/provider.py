@@ -3,6 +3,7 @@ from .models import Order
 from .db_manager import *
 import httpx
 from .rabbit import RabbitMQSender
+import json
 
 
 router = APIRouter()
@@ -38,7 +39,7 @@ async def new_order(payload: Order, background_tasks: BackgroundTasks):
         'message': f"Votre commande numero a été bien reçue et est en cours de traitement",
     }
     with httpx.Client() as client:
-        response = client.post("http://localhost:8001/place_order", json=payload)
+        response = client.post("http://localhost:8001/place_order", json=json.dumps(payload.dict()))
         print(response.text)
     return response
 
