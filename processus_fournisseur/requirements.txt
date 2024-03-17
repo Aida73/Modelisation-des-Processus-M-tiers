@@ -5,7 +5,7 @@ aio-pika==9.4.0
 #argcomplete==1.10.3
 #asgiref==3.5.0
 #async-timeout==4.0.3
-#asyncpg==0.29.0
+asyncpg==0.29.0
 #attrs==23.1.0
 #Automat==22.10.0
 #autopep8==1.7.0
@@ -18,7 +18,7 @@ aio-pika==9.4.0
 #constantly==15.1.0
 #cycler==0.11.0
 #dacite==1.8.1
-#databases==0.8.0
+databases==0.8.0
 #dataclasses-json==0.5.9
 #distlib==0.3.4
 #distro==1.8.0
@@ -79,7 +79,7 @@ httpx==0.25.2
 #platformdirs==2.5.1
 #prettytable==0.7.2
 #psutil==5.9.7
-#psycopg2-binary==2.9.9
+psycopg2-binary==2.9.9
 #py-translate==1.0.3
 #py4j==0.10.9.7
 #pycodestyle==2.9.1

@@ -27,7 +27,7 @@ async def add_message(queue):
 
 @router.post("/devis")
 async def post_devis(id_order, payload:Devis, background_tasks: BackgroundTasks):
-    background_tasks.add(add_devis, payload)
+    background_tasks.add_task(add_devis, payload)
     response = {
         **payload.model_dump()
     }
@@ -36,7 +36,7 @@ async def post_devis(id_order, payload:Devis, background_tasks: BackgroundTasks)
 # add new order
 @router.post("/place_order")
 async def add_order(payload: Order, background_tasks: BackgroundTasks):
-    background_tasks.add_tasks(save_order, payload)
+    background_tasks.add_task(save_order, payload)
     response = {
         'message': f"ok",
     }

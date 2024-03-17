@@ -11,7 +11,7 @@ router = APIRouter()
 async def save_order(payload):
     return await add_order(payload)
 
-async def add_client(payload):
+async def save_client(payload):
     return await add_client(payload)
 
 
@@ -32,7 +32,7 @@ def confirm_order(verif_status):
 # add new order
 @router.post("/place_order")
 async def add_order(payload: Order, background_tasks: BackgroundTasks):
-    background_tasks.add_tasks(save_order, payload)
+    background_tasks.add_task(save_order, payload)
     response = {
         'message': f"Votre commande numero a été bien reçue et est en cours de traitement",
     }
@@ -53,11 +53,12 @@ async def send_message(queue, message):#payload: Order, background_tasks: Backgr
 
 
 @router.post("/add_client")
-async def add_client(payload: Client, background_tasks: BackgroundTasks):
-    background_tasks.add_tasks(add_client, payload)
+async def new_client(payload: Client, background_tasks: BackgroundTasks):
+    background_tasks.add_task(save_client, payload)
+    #id_client = await add_client(payload)
     response = {
-        'message': f"Client successfully added!",
-    }
+        'message': f"Client successfully added!"
+        }
     return response
 
 @router.get("/clients")
