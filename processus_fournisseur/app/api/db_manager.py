@@ -5,7 +5,7 @@ from sqlalchemy import insert,select
 
 
 async def add_order(payload:Order):
-    query = orders.insert().values(**payload.model_dump())
+    query = orders.insert().values(**payload.__dict__)
     return await database.execute(query=query)
 
 

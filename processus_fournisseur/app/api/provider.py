@@ -32,12 +32,17 @@ def confirm_order(verif_status):
 # add new order
 @router.post("/place_order")
 async def new_order(payload: Order, background_tasks: BackgroundTasks):
-    background_tasks.add_tasks(save_order, payload)
+    #print("1",**payload.model_dump())
+    print("2", payload.__dict__)
+    #print(type(**payload))
+    #print("2",**payload)
+    print("3")
+    background_tasks.add_task(save_order, payload)
     response = {
         'message': f"Votre commande numero a été bien reçue et est en cours de traitement",
     }
-    with httpx.Client() as client:
-        response = client.post("http://localhost:8001/place_order", json=payload)
+    # with httpx.Client() as client:
+    #     response = client.post("http://localhost:8001/place_order", json=payload)
     return response
 
 @router.get("/orders")
