@@ -11,8 +11,8 @@ FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 COPY --from=builder /app/dist/ui_frontend .
-COPY nginx/custom.conf  /etc/nginx/conf.d/default.conf
+COPY nginx/custom.conf  /etc/nginx/conf.d/app.conf
 
 EXPOSE 80
-#ENTRYPOINT [ "nginx", "-g", "daemon off;"]
+ENTRYPOINT [ "nginx", "-g", "daemon off;"]
 

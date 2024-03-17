@@ -24,14 +24,14 @@ metadata = MetaData()
 clients = Table(
     'clients',
     metadata,
-    Column('client_id', String(50), primary_key=True),
+    Column('client_id', String(50), primary_key=True, autoincrement=True),
     Column('username', String(20)),  
 )
 
 orders = Table(
     'orders',
     metadata,
-    Column('order_id', String(50), primary_key=True),
+    Column('order_id', String(50), primary_key=True, autoincrement=True),
     Column('status', String(20)),
     Column('service', String(200)),
     Column('order_date', DateTime),
@@ -42,7 +42,7 @@ orders = Table(
 devis = Table(
     'devis',
     metadata,
-    Column('devis_id', String(50), primary_key=True),
+    Column('devis_id', String(50), primary_key=True, autoincrement=True),
     Column('status', String(20)),
     Column('devis_date', DateTime),  
     Column('devis_delivery_date', DateTime),   
@@ -52,7 +52,7 @@ devis = Table(
 realisations = Table(
     'realisaions',
     metadata,
-    Column('realisation_id', String(50), primary_key=True),
+    Column('realisation_id', String(50), primary_key=True, autoincrement=True),
     Column('order_id', String(50), ForeignKey('orders.order_id')),
     Column('status', String(20)),
     Column('realisation_date', DateTime)
