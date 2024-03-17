@@ -53,7 +53,7 @@ async def send_message(queue, message):#payload: Order, background_tasks: Backgr
 
 
 @router.post("/add_client")
-async def add_client(payload: Order, background_tasks: BackgroundTasks):
+async def add_client(payload: Client, background_tasks: BackgroundTasks):
     background_tasks.add_tasks(add_client, payload)
     response = {
         'message': f"Client successfully added!",

@@ -92,3 +92,6 @@ services:
 volumes:
   postgres_provider_data:
   postgres_client_data:
+
+#CREATE ROLE myuser2 WITH LOGIN PASSWORD 'mypassword2';
+#GRANT ALL PRIVILEGES ON DATABASE client_db TO myuser2;

@@ -6,6 +6,8 @@ COPY requirements.txt .
 
 COPY .env .
 
+COPY . .
+
 RUN apt-get update 
 # && apt-get install gcc -y \
 # && apt-get clean
