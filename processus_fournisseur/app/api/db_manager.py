@@ -5,7 +5,15 @@ from sqlalchemy import insert,select
 
 
 async def add_order(payload:Order):
-    query = orders.insert().values(**payload.__dict__)
+    order_dict = payload.dict()
+    if isinstance(order_dict['order_date'], datetime):
+        order_dict['order_date'] = order_dict['order_date'].isoformat()
+    
+    if order_dict['service_delivery_date'] is not None and isinstance(order_dict['service_delivery_date'], datetime):
+        order_dict['service_delivery_date'] = order_dict['service_delivery_date'].isoformat()
+
+    query = orders.insert().values(**order_dict)
+    print("query",query)
     return await database.execute(query=query)
 
 
@@ -14,7 +22,7 @@ async def get_order_by_id(order_id: str):
     return await database.fetch_one(query=query)
 
 async def get_all_orders():
-    query = orders.select()
+    query = select(orders)
     return await database.fetch_all(query=query)
 
 async def add_client(payload: Client):

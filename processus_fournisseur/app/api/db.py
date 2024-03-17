@@ -1,4 +1,4 @@
-from sqlalchemy import (Column, Integer, MetaData, String, Table,
+from sqlalchemy import (Column, Integer, MetaData, String, Table, DateTime,
                         create_engine, ForeignKey, Boolean)
 from databases import Database
 from dotenv import load_dotenv
@@ -26,8 +26,8 @@ orders = Table(
     Column('order_id', String(50), primary_key=True),
     Column('status', String(20)),
     Column('service', String(200)),
-    Column('order_date', String(200)),
-    Column('service_delivery_date', String(200)),  
+    Column('order_date', DateTime),
+    Column('service_delivery_date', DateTime, nullable=True),  
     Column('client_id', String(50), ForeignKey('clients.client_id')),
 )
 
