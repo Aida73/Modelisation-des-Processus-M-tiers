@@ -31,8 +31,8 @@ def confirm_order(verif_status):
 
 # add new order
 @router.post("/place_order")
-async def add_order(payload: Order, background_tasks: BackgroundTasks):
-    background_tasks.add_task(save_order, payload)
+async def new_order(payload: Order, background_tasks: BackgroundTasks):
+    background_tasks.add_tasks(save_order, payload)
     response = {
         'message': f"Votre commande numero a été bien reçue et est en cours de traitement",
     }
