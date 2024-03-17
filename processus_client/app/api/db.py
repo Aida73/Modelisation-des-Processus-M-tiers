@@ -35,8 +35,8 @@ orders = Table(
     Column('status', String(20)),
     Column('service', String(200)),
     Column('order_date', DateTime),
-    Column('service_delivery_date', DateTime),  
-    #Column('provider_id', String(50), ForeignKey('providers')),
+    Column('service_delivery_date', DateTime, nullable=True),  
+    Column('client_id', String(50), ForeignKey('clients.client_id')),
 )
 
 devis = Table(
@@ -44,8 +44,8 @@ devis = Table(
     metadata,
     Column('devis_id', String(50), primary_key=True),
     Column('status', String(20)),
-    Column('devis_date', DateTime),  
-    Column('devis_delivery_date', DateTime),   
+    Column('devis_date', String(200)),  
+    Column('devis_delivery_date', String(200)),   
     Column('order_id', String(50), ForeignKey('orders.order_id')),
 )
 
@@ -53,11 +53,10 @@ realisations = Table(
     'realisaions',
     metadata,
     Column('realisation_id', String(50), primary_key=True),
-    Column('order_id', String(50), ForeignKey('orders.order_id')),
     Column('status', String(20)),
-    Column('realisation_date', DateTime)
+    Column('realisation_date', String(200)),
+    Column('order_id', String(50), ForeignKey('orders.order_id')),
 )
-
 
 
 metadata.create_all(engine)

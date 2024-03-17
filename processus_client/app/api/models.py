@@ -1,4 +1,5 @@
-from pydantic import BaseModel
+from typing import Optional
+from pydantic import BaseModel, Field
 from datetime import datetime
 
 
@@ -7,16 +8,15 @@ from datetime import datetime
 #     username: str
 
 class Client(BaseModel):
-    client_id = str
-    username = str
-
+    client_id: str
+    username:  str
 
 class Order(BaseModel):
     order_id: str
     service: str
     status: str
-    order_date: datetime
-    service_delivery_date: datetime
+    order_date: datetime = Field(default_factory=datetime.now)
+    service_delivery_date: Optional[datetime] = None
     client_id: str
 
 
@@ -24,13 +24,14 @@ class Devis(BaseModel):
     devis_id: str
     order_id: str
     status: str
-    devis_date: datetime
-    devis_delivery_date: datetime
+    devis_date: str
+    devis_delivery_date: str
+
 
 class Realisation(BaseModel):
     realisation_id: str
     order_id: str
     status: str
-    realisation_date: datetime
+    realisation_date: str
 
 
