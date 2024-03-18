@@ -4,6 +4,7 @@ from .db_manager import *
 import httpx
 from .rabbit import RabbitMQSender
 import json
+import requests
 
 
 router = APIRouter()
@@ -38,9 +39,17 @@ async def new_order(payload: Order, background_tasks: BackgroundTasks):
     response = {
         'message': f"Votre commande numero a été bien reçue et est en cours de traitement",
     }
-    with httpx.Client() as client:
-        response = client.post("http://localhost:8001/place_order", json=json.dumps(payload.dict()))
-        print(response.text)
+    
+    print("payload json", payload.dict())
+    data = payload.dict()
+    data.pop('order_date')
+    print(data)
+    
+    # async with httpx.AsyncClient() as client:
+    #     response = await client.post("http://processus_client:8000/place_order", json=data)
+    #     print(response.text)
+    response_client = requests.post("http://processus_client:8000/place_order", json=data)
+    print(response_client.text)
     return response
 
 @router.get("/orders")
