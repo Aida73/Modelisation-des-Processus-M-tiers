@@ -20,7 +20,7 @@ class RabbitMQSender:
             finally:
                 pass
 
-    async def send_message(self, queue, message):
+    async def send_message(self, queue:str, message):
 
         try:
             async with self.get_connection() as channel:

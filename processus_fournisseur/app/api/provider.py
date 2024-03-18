@@ -2,7 +2,7 @@ from fastapi import APIRouter, BackgroundTasks, HTTPException
 from .models import Order
 import requests
 from .db_manager import *
-import json
+from app.provider_tasks import app_prov
 import httpx
 from .rabbit import RabbitMQSender
 import json
@@ -21,6 +21,8 @@ async def save_client(payload):
 async def save_devis(payload):
     return await add_devis(payload)
 
+async def modify_order(id:str, status: str):
+    return await update_order(id, status)
 
 def check_order(order_id: int, background_tasks: BackgroundTasks):
     status = "valide"
@@ -96,3 +98,15 @@ async def post_devis(payload:Devis, background_tasks: BackgroundTasks):
 async def get_devis():
     devis = await get_all_devis()
     return devis
+
+
+@router.put("/order")
+async def put_order(order_id: str, status: str, backgroundtasks: BackgroundTasks):
+    backgroundtasks.add_task(modify_order, order_id, status)
+    if status=="valide":
+        app_prov.send_tasks("client_tasks.validate_order")
+    response = {
+        "message": "Status updated successfully!!!"
+    }
+    
+    return response

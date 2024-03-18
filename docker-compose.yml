@@ -89,6 +89,24 @@ services:
     command:
     - start-dev
 
+  celery_worker_client:
+    build:
+      context: ./processus_client
+      dockerfile: Dockerfile
+    command: celery -A client_tasks worker --loglevel=info
+    depends_on:
+      - rabbitmq
+      - processus_client
+
+  celery_worker_provider:
+    build:
+      context: ./processus_fournisseur
+      dockerfile: Dockerfile
+    command: celery -A provider_tasks worker --loglevel=info
+    depends_on:
+      - rabbitmq
+      - processus_client
+
 volumes:
   postgres_provider_data:
   postgres_client_data:

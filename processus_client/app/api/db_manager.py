@@ -59,3 +59,17 @@ async def add_devis(payload: Devis):
 async def get_all_devis():
     query = select(devis)
     return await database.fetch_all(query=query)
+
+async def get_devis_by_id(devis_id:str):
+    query = devis.select(devis.c.devis_id == devis_id)
+    return await database.execute(query=devis)
+
+
+async def update_devis(devis_id: str, status:str):
+    query = devis.update().where(devis.c.devis_id == devis_id).values(status=status)
+    return await database.execute(query=query)
+    
+    
+async def update_order(order_id: str, status:str):
+    query = orders.update().where(devis.c.devis_id == order_id).values(status=status)
+    return await database.execute(query=query)
