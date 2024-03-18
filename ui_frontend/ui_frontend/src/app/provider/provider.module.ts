@@ -15,7 +15,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   ],
   imports: [
     CommonModule,
-    ProviderRoutingModule
+    ProviderRoutingModule,
   ],
   exports: [
     SidebarComponent

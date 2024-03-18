@@ -1,0 +1,85 @@
+<div class="container-fluid mb-2"><h4>Liste des runs</h4></div>
+<ng-container *ngIf="data$ | async as dataSourceValue" [ngSwitch]="dataSourceValue.dataState" class="p-3">
+    <ng-container *ngSwitchCase="DataStateEnum.LOADED">
+        
+            <mat-form-field style="width: 100%;">
+              <mat-label>Filtrez l'information de votre choix</mat-label>
+              <input matInput (keyup)="applyFilter($event)" #input>
+            </mat-form-field>
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+              
+              <!-- Name Column -->
+              <ng-container matColumnDef="Nom">
+                <th mat-header-cell *matHeaderCellDef> Nom </th>
+                <td mat-cell *matCellDef="let element"> 
+                  {{element.name}} 
+                </td>
+              </ng-container>
+
+              <!-- Date Column -->
+              <ng-container matColumnDef="Client">
+                <th mat-header-cell *matHeaderCellDef>Client</th>
+                <td mat-cell *matCellDef="let element"> {{element.client_id}} </td>
+              </ng-container>
+              <!-- Date Column -->
+              <ng-container matColumnDef="Date de commande">
+                <th mat-header-cell *matHeaderCellDef> Date de commande</th>
+                <td mat-cell *matCellDef="let element"> {{element.order_date |date: "short"}} </td>
+              </ng-container>
+          
+              <!-- Service Column -->
+              <!-- <ng-container matColumnDef="Date">
+                <th mat-header-cell *matHeaderCellDef>Date</th>
+                <td mat-cell *matCellDef="let element"> {{element.order_date}} </td>
+              </ng-container> -->
+          
+              <!-- Status Column -->
+              <ng-container matColumnDef="Statut">
+                <th mat-header-cell *matHeaderCellDef>Statut</th>
+                <td mat-cell *matCellDef="let element"> 
+                  <mat-icon matTooltip="{{element.status}}" [style.color]="getStatusIcon(element.status)['color']">{{getStatusIcon(element.status)['icon']}}</mat-icon>
+                </td>
+              </ng-container>
+        
+              <!-- Progression Column -->
+              <!-- <ng-container matColumnDef="Progression">
+                <th mat-header-cell *matHeaderCellDef> Progression </th>
+                <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+              </ng-container>       -->
+        
+               <!-- Action Column -->
+               <ng-container matColumnDef="Action">
+                <th mat-header-cell *matHeaderCellDef>Action</th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon" matTooltip="Voir les détails" (click)="goToDetailsRun(element.id)">
+                        <mat-icon>visibility</mat-icon>
+                    </button>
+                </td>
+              </ng-container>
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          
+            <mat-paginator [pageSizeOptions]="[10]"
+                           showFirstLastButtons
+                           aria-label="Select page of run elements">
+            </mat-paginator>
+     
+    </ng-container>
+    <ng-container *ngSwitchCase="DataStateEnum.LOADING">
+        <div class="card p-4">
+            <div class="row justify-content-center align-items-center">
+                <mat-spinner></mat-spinner>
+            </div>
+        </div>
+        
+    </ng-container>
+    <ng-container *ngSwitchCase="DataStateEnum.ERROR">
+        <div class="card py-4">
+            <div class="alert alert-danger text-white">
+                {{dataSourceValue.errorMessage}}
+            </div>
+        </div>
+    </ng-container>
+</ng-container>
