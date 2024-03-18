@@ -37,3 +37,11 @@ async def get_all_clients():
 async def get_client_by_id(id_client: str):
     query = clients.select(clients.client_id==id_client)
     return await database.execute(query=query)
+
+async def add_devis(payload: Devis):
+    query = devis.insert().values(**payload.dict())
+    return await database.execute(query=query)
+
+async def get_all_devis():
+    query = select(devis)
+    return await database.fetch_all(query=query)

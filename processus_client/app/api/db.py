@@ -1,5 +1,5 @@
 from sqlalchemy import (Column, Integer, MetaData, String, Table, DateTime,
-                        create_engine, ForeignKey, Boolean)
+                        create_engine, ForeignKey, Boolean, func, TIMESTAMP)
 from databases import Database
 from dotenv import load_dotenv
 import os
@@ -34,8 +34,8 @@ orders = Table(
     Column('order_id', String(50), primary_key=True),
     Column('status', String(20)),
     Column('service', String(200)),
-    Column('order_date', DateTime),
-    Column('service_delivery_date', DateTime, nullable=True),  
+    Column('order_date', type_=TIMESTAMP(timezone=True)),
+    Column('service_delivery_date', type_=TIMESTAMP(timezone=True)),  
     Column('client_id', String(50), ForeignKey('clients.client_id')),
 )
 

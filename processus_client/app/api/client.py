@@ -1,5 +1,6 @@
 from fastapi import APIRouter, BackgroundTasks, HTTPException
 from .models import *
+import requests
 from .db_manager import *
 import httpx
 from .rabbit import RabbitMQReceiver
@@ -11,6 +12,9 @@ async def save_order(payload):
 
 async def save_client(payload):
     return await add_client(payload)
+
+async def save_devis(payload):
+    return await add_devis(payload)
 
 @router.post("/add_client")
 async def new_client(payload: Client, background_tasks: BackgroundTasks):
@@ -39,10 +43,12 @@ async def add_message(queue):
 
 
 @router.post("/devis")
-async def post_devis(id_order, payload:Devis, background_tasks: BackgroundTasks):
-    background_tasks.add_task(add_devis, payload)
+async def post_devis(payload:Devis, background_tasks: BackgroundTasks):
+    background_tasks.add_task(save_devis, payload)
+    response = requests.post("http://processus_fournisseur:8000/devis", json=payload.dict())
+    print(response.text)
     response = {
-        **payload.model_dump()
+        "message": "Devis added successfully"
     }
     return response
 
@@ -55,3 +61,8 @@ async def new_order(payload: Order, background_tasks: BackgroundTasks):
         'message': "ok",
     }
     return response
+
+@router.get("/devis")
+async def get_devis():
+    devis = await get_all_devis()
+    return devis

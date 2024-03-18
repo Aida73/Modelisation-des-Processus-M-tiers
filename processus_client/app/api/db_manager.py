@@ -48,9 +48,14 @@ async def get_all_orders():
     return await database.fetch_all(query=query)
 
 
-async def add_devis(payload:Devis):
-    query = devis.insert().values(**payload.model_dump())
-    return await database.execute(query=query)
 
 async def valider_commande(order_id:str, status:str):
     query = orders.update().where(order_id=order_id)
+    
+async def add_devis(payload: Devis):
+    query = devis.insert().values(**payload.dict())
+    return await database.execute(query=query)
+
+async def get_all_devis():
+    query = select(devis)
+    return await database.fetch_all(query=query)
