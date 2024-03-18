@@ -46,20 +46,14 @@ def confirm_order(verif_status):
 
 @router.post("/place_order")
 async def new_order(payload: Order, background_tasks: BackgroundTasks):
-
     background_tasks.add_task(save_order, payload)
     response = {
         'message': f"Votre commande numero a été bien reçue et est en cours de traitement",
     }
-    
     print("payload json", payload.dict())
     data = payload.dict()
     data.pop('order_date')
     print(data)
-    
-    # async with httpx.AsyncClient() as client:
-    #     response = await client.post("http://processus_client:8000/place_order", json=data)
-    #     print(response.text)
     response_client = requests.post("http://processus_client:8000/place_order", json=data)
     print(response_client.text)
     return response

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { CommandesDetailsRoutingModule } from './commandes-details-routing.module';
 import { CommandesDetailsComponent } from './commandes-details.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { CommandesDetailsComponent } from './commandes-details.component';
   ],
   imports: [
     CommonModule,
-    CommandesDetailsRoutingModule
+    CommandesDetailsRoutingModule,
+    SharedModule
   ]
 })
 export class CommandesDetailsModule { }

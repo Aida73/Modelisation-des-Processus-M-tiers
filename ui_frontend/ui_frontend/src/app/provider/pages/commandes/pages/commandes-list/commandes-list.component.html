@@ -8,11 +8,11 @@
             </mat-form-field>
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
               
-              <!-- Name Column -->
-              <ng-container matColumnDef="Nom">
-                <th mat-header-cell *matHeaderCellDef> Nom </th>
+              <!-- Id Column -->
+              <ng-container matColumnDef="Identifiant">
+                <th mat-header-cell *matHeaderCellDef> Identifiant </th>
                 <td mat-cell *matCellDef="let element"> 
-                  {{element.name}} 
+                  {{element.order_id}} 
                 </td>
               </ng-container>
 
@@ -51,7 +51,7 @@
                <ng-container matColumnDef="Action">
                 <th mat-header-cell *matHeaderCellDef>Action</th>
                 <td mat-cell *matCellDef="let element">
-                    <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon" matTooltip="Voir les détails" (click)="goToDetailsRun(element.id)">
+                    <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon" matTooltip="Voir les détails" (click)="goToDetailsOrder(element.order_id)">
                         <mat-icon>visibility</mat-icon>
                     </button>
                 </td>

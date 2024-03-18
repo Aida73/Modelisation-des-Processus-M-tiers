@@ -14,7 +14,15 @@ export class OrderService {
 
   public getAllOrders(): Observable<Order[]> {
       return this.http.get<Order[]>(`${environment.api_provider}/orders`);
-      
+
+  }
+
+  public getOrder(order_id: string): Observable<Order>{
+    return this.http.get<Order>(`${environment.api_provider}/orders/${order_id}`);
+  }
+
+  public updateOrder(order_id: string, object: Object): Observable<Order>{
+    return this.http.put<Order>(`${environment.api_provider}/orders/${order_id}`, object);
   }
 
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { KeycloakService } from 'keycloak-angular';
 import { Observable,Subscription, startWith, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Order } from 'src/app/models/model.order';
@@ -18,7 +17,7 @@ export class CommandesListComponent implements OnInit{
   data$! : Observable<AppDataState<Order[]>>;
   dataSource: MatTableDataSource<Order> = new MatTableDataSource<Order>();
   dataSourceSubscription!: Subscription;
-  displayedColumns: string[] = ['Client', 'Date de commande', 'Statut', 'Action'];
+  displayedColumns: string[] = ['Identifiant','Client', 'Date de commande', 'Statut', 'Action'];
   readonly DataStateEnum = DataStateEnum;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -57,8 +56,8 @@ export class CommandesListComponent implements OnInit{
     );
   }
 
-  goToDetailsRun(id:number){
-    this.router.navigate(['view',id],{relativeTo: this.route})
+  goToDetailsOrder(id:string){
+    this.router.navigate([id],{relativeTo: this.route})
   }
   
   getStatusIcon(statut: string){
@@ -69,13 +68,13 @@ export class CommandesListComponent implements OnInit{
         icon = 'pending';
         color = '#f0ad4e';
         break;
-      case 'finish':
-        icon = 'check_circle';
-        color = '#22bb33';
+      case 'valide':
+        icon = 'pending';
+        color = '#ABEBC6'; //#
         break;
-      case 'failed':
-        icon = 'block';
-        color = '#bb2124';
+      case 'realise':
+        icon = 'check_circle';
+        color = '#22bb33'; //bb2124
         break;
       default:
         icon = 'help';

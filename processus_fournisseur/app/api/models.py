@@ -35,6 +35,6 @@ class Realisation(BaseModel):
     realisation_date: str
 
 class OrderUpdate(BaseModel):
-    status: Optional[str] = None
-    service_delivery_date: datetime = Field(default_factory=datetime.now)
+    status: str
+    service_delivery_date: Optional[datetime] = Field(default_factory=datetime.now)
 
