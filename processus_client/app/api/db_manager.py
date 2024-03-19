@@ -66,7 +66,7 @@ async def update_order(order_id: str, status:str):
     return await database.execute(query=query)
 
 async def add_devis(payload:Devis):
-    query = devis.insert().values(**payload.model_dump())
+    query = devis.insert().values(**payload.dict())
     return await database.execute(query=query)
 
 async def valider_commande(order_id:str, status:str):

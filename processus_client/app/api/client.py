@@ -19,6 +19,9 @@ async def save_client(payload):
 async def save_devis(payload):
     return await add_devis(payload)
 
+async def modify_devis(devis_id:str, status:str):
+    return await update_devis(devis_id, status)
+
 @router.post("/add_client")
 async def new_client(payload: Client, background_tasks: BackgroundTasks):
     background_tasks.add_task(save_client, payload)
@@ -65,3 +68,14 @@ async def new_order(payload: Order, background_tasks: BackgroundTasks):
 async def get_devis():
     devis = await get_all_devis()
     return devis
+
+@router.put("/devis")
+async def put_devis(devis_id:str, status:str, backgroundtasks: BackgroundTasks):
+    backgroundtasks.add_task(modify_devis,devis_id,status)
+    if status=="valide":
+        app_cli.send_task("provider_tasks.validate_devis",args=[devis_id])
+    response = {
+        "message": "Status updated successfully"
+    }
+    return response
+    

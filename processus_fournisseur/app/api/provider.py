@@ -71,6 +71,8 @@ async def get_orders():
 async def update_existing_order(background_tasks: BackgroundTasks, order_id: str, payload: OrderUpdate):
     update_values = payload.dict(exclude_unset=True)
     background_tasks.add_task(update_ex_order, order_id, update_values)
+    if update_values.status=="valide":
+        app_prov.send_task("client_tasks.validate_order",args=[order_id])
     return {"message": "Order update initiated"}
 
 
@@ -124,13 +126,13 @@ async def get_devis():
     return devis
 
 
-@router.put("/order")
-async def put_order(order_id: str, status: str, backgroundtasks: BackgroundTasks):
-    backgroundtasks.add_task(modify_order, order_id, status)
-    if status=="valide":
-        app_prov.send_tasks("client_tasks.validate_order")
-    response = {
-        "message": "Status updated successfully!!!"
-    }
+# @router.put("/order")
+# async def put_order(order_id: str, status: str, backgroundtasks: BackgroundTasks):
+#     backgroundtasks.add_task(modify_order, order_id, status)
+#     if status=="valide":
+#         app_prov.send_tasks("client_tasks.validate_order")
+#     response = {
+#         "message": "Status updated successfully!!!"
+#     }
     
-    return response
+#     return response
