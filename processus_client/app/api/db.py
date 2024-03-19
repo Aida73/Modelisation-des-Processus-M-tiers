@@ -48,6 +48,17 @@ devis = Table(
     Column('devis_delivery_date', String(200)),   
     Column('order_id', String(50), ForeignKey('orders.order_id')),
 )
+#heroes: List["Hero"] = Relationship(back_populates="team")
+
+deviswithorders = Table(
+    'deviswithorders',
+    metadata,
+    Column('devis_id', String(50), primary_key=True),
+    Column('status', String(20)),
+    Column('devis_date', String(200)),  
+    Column('devis_delivery_date', String(200)),   
+    Column('order_id', String(50), ForeignKey('orders.order_id')),
+)
 
 realisations = Table(
     'realisaions',

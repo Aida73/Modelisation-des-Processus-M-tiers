@@ -69,6 +69,18 @@ async def get_devis():
     devis = await get_all_devis()
     return devis
 
+@router.get("/devis/clients/{client_id}")
+async def get_client_devis(client_id: str):
+    devis = await get_devis_by_client_id(client_id)
+    return devis
+
+
+@router.get("/devis/{devis_id}")
+async def get_devis(devis_id: str):
+    devis = await get_devis_by_id(devis_id)
+    return devis
+
+
 @router.put("/devis")
 async def put_devis(devis_id:str, status:str, backgroundtasks: BackgroundTasks):
     backgroundtasks.add_task(modify_devis,devis_id,status)

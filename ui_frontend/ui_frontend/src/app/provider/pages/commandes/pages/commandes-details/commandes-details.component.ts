@@ -59,7 +59,7 @@ export class CommandesDetailsComponent implements OnInit{
     this.orderService.updateOrder(this.orderId, {"status":status}).subscribe({
       next: (response) => {
         console.log('Order updated', response);
-         //this.router.navigate([this.orderId])
+        this.router.navigate(['/provider/commandes'])
       },
       error: (error) => console.error('Error updating order', error),
     });

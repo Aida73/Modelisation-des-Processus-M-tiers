@@ -22,10 +22,20 @@ class Order(BaseModel):
 
 class Devis(BaseModel):
     devis_id: str
-    order_id: str
+    order_id: Order
     status: str
     devis_date: str
     devis_delivery_date: str
+
+class ExistingDevis(BaseModel):
+    devis_id: str
+    status: str
+    devis_date: str
+    devis_delivery_date: str
+    order: Order
+
+    class Config:
+        orm_mode = True
 
 
 class Realisation(BaseModel):

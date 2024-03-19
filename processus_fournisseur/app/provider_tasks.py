@@ -1,4 +1,4 @@
-# from celery import Celery
+from celery import Celery
 # import requests
 # import asyncio
 # from asgiref.sync import async_to_sync

@@ -129,7 +129,7 @@ async def get_devis():
     return devis
 
 @router.put("/devis")
-async def put_order(devis_id: str, status: str, backgroundtasks: BackgroundTasks):
+async def put_devis(devis_id: str, status: str, backgroundtasks: BackgroundTasks):
     backgroundtasks.add_task(modify_devis, devis_id, status)
     response = {
         "message": "Status updated successfully initialized!!!"

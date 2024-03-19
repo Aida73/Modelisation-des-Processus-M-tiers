@@ -18,7 +18,7 @@ async def get_all_clients():
     return await database.fetch_all(query=query)
 
 async def get_client_by_id(id_client: str):
-    query = clients.select(clients.client_id==id_client)
+    query = select(clients).where(clients.c.client_id==id_client)
     return await database.execute(query=query)
 
 
@@ -41,7 +41,7 @@ async def add_order(payload:Order):
 
 
 async def get_order(order_id: str):
-    query = orders.select(orders.order_is==order_id)
+    query = select(orders).where(orders.c.devis_id == order_id)
     return await database.fetch_one(query=query)
 
 async def get_all_orders():
@@ -53,37 +53,48 @@ async def get_all_devis():
     return await database.fetch_all(query=query)
 
 async def get_devis_by_id(devis_id:str):
-    query = devis.select(devis.c.devis_id == devis_id)
-    return await database.execute(query=query)
-
+    query = select(devis).where(devis.c.devis_id == devis_id)
+    devis_result = await database.fetch_one(query)
+    order_query = select(orders).where(orders.c.order_id == devis_result["order_id"])
+    order_result = await database.fetch_one(order_query)
+    devis_result = dict(devis_result)
+    devis_result['order']=order_result
+    #{
+    #     "devis_id": devis_result["devis_id"],
+    #     "status": devis_result["status"],
+    #     "devis_date": devis_result["devis_date"],
+    #     "devis_delivery_date": devis_result["devis_delivery_date"],
+    #     "order_id": {
+    #         "order_id": order_result["order_id"],
+    #         "client_id": order_result["client_id"],
+    #     }
+    # }
+    return devis_result
 
 async def update_devis(devis_id: str, status:str):
     query = devis.update().where(devis.c.devis_id == devis_id).values(status=status)
     return await database.execute(query=query)
     
-    
-async def update_order(order_id: str, status:str):
-    query = orders.update().where(devis.c.devis_id == order_id).values(status=status)
-    return await database.execute(query=query)
-
 async def add_devis(payload:Devis):
     query = devis.insert().values(**payload.dict())
     return await database.execute(query=query)
 
-async def valider_commande(order_id:str, status:str):
-    query = orders.update().where(order_id=order_id)
-
-
-async def get_devis_by_id(devis_id:str):
-    query = devis.select(devis.c.devis_id == devis_id)
-    return await database.execute(query=query)
-
-
-async def update_devis(devis_id: str, status:str):
-    query = devis.update().where(devis.c.devis_id == devis_id).values(status=status)
-    return await database.execute(query=query)
+async def get_devis_by_client_id(client_id: str):
+    query = select([devis]).select_from(
+        devis.join(orders, devis.c.order_id == orders.c.order_id)
+    ).where(orders.c.client_id == client_id)
     
+    results = await database.fetch_all(query)
     
+    return results
+
 async def update_order(order_id: str, status:str):
     query = orders.update().where(devis.c.devis_id == order_id).values(status=status)
     return await database.execute(query=query)
+
+
+
+async def valider_commande(order_id:str, status:str):
+    query = orders.update().where(order_id=order_id)
+
+    
