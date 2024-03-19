@@ -4,9 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
-import { HomeComponent } from './home/home.component';
-import { ClientComponent } from './client/client.component';
-import { ProviderComponent } from './provider/provider.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -14,7 +13,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       config: {
         url: 'http://localhost:8085',
         realm: 'processus-metiers-projet',
-        clientId: 'pmp-web-client'
+        clientId: 'pmp-web-client-1'
       },
       initOptions: {
         onLoad: 'check-sso',
@@ -31,7 +30,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    KeycloakAngularModule
+    KeycloakAngularModule,
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [
     {

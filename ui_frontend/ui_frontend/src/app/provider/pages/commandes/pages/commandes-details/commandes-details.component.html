@@ -1,0 +1,89 @@
+<div class="container-fluid">
+    <ng-container *ngIf="order$ | async as order">
+        <h1>Détails de la commande</h1>
+        <main class="page-content page-content--order-header">
+            <div class="container shadow p-3 mb-5 bg-white rounded">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-body">
+                              <h2 class="h2 card-title text-center">Commande Numéro {{order.order_id}}</h2>
+                              <div class="text-center">
+                                <!-- <img src="./../../../../../../assets/img/adn.png" class="img-fluid" width="100px" /> -->
+                              </div>
+                              <ul class="list-group list-group-flush">
+                                <li class="list-group-item list-group-item-action flex-column align-items-start py-2">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h3 class="h3 text-muted">Client</h3>
+                                        <h3 class="h3 mb-1">{{order.client_id}}</h3>
+                                    </div>
+                                </li>
+                                <li class="list-group-item list-group-item-action flex-column align-items-start py-2">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h3 class="h3 text-muted">Ajouté le</h3>
+                                        <h3 class="h3 mb-1">{{order.order_date | date: "short"}}</h3>
+                                    </div>
+                                </li>
+                                <li class="list-group-item list-group-item-action flex-column align-items-start py-2">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h3 class="h3 text-muted">Dernière modification</h3>
+                                        <h3 class="h3 mb-1">{{order.service_delivery_date | date: "short"}}</h3>
+                                    </div>
+                                </li>
+                                <li class="list-group-item list-group-item-action flex-column align-items-start py-2">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h3 class="h3 text-muted">Status actuel</h3>
+                                        <!-- <mat-icon [style.color]="getStatusIcon(order.status)['color']">{{getStatusIcon(order.status)['icon']}}</mat-icon> -->
+                                        <!-- <span *ngIf="confirmed">{{order.status}}</span> -->
+                                        <button *ngIf="confirmed" mat-raised-button extended color="primary" (click)="OnConfirmOrder('valide')">
+                                            <mat-icon></mat-icon>
+                                            Valider
+                                        </button>
+                                        <button *ngIf="realised" mat-raised-button extended color="primary" (click)="OnConfirmOrder('realise')">
+                                            <mat-icon></mat-icon>
+                                            Terminer
+                                        </button>
+                                        <h3 *ngIf="terminated" class="h3">{{order.status}}</h3>
+                                    </div>
+                                </li>
+                                <!-- <li class="list-group-item list-group-item-action flex-column align-items-start py-2">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="text-muted">Commentaires</h6>
+                                        <small class="mb-1">{{run.comment}}</small>
+                                    </div>
+                                </li> -->
+                                <!-- <li class="list-group-item list-group-item-action flex-column align-items-start py-2">
+                                    <div class="d-flex w-100 flex-column justify-content-between">
+                                        <h6 class="text-muted">Métadonnées</h6>
+                                        <mat-chip-set
+                                            class="example-chip"
+                                            cdkDropList>
+                                            <mat-chip
+                                                class="example-box"
+                                                cdkDrag
+                                                *ngFor="let keyword of run.metaDataList.slice(0,3)">
+                                                {{keyword.name}} 
+                                            </mat-chip>
+                                            <mat-chip color="accent" *ngIf="run.metaDataList.length != 0">
+                                                <button mat-icon-button (click)="openDialog()" aria-label="Voir les métadonnées et les valeurs">
+                                                    <mat-icon>add</mat-icon>
+                                                  </button>
+                                            </mat-chip>
+                                        </mat-chip-set>
+                                    </div>
+                                </li> -->
+                              </ul>
+                            </div>
+                        </div>                         
+                    </div>
+                    <!--  -->
+                </div>
+            </div>
+        </main>
+    </ng-container>
+    
+
+</div>
+
+
+
