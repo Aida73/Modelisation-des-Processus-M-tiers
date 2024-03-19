@@ -47,7 +47,7 @@ realisations = Table(
     'realisaions',
     metadata,
     Column('realisation_id', String(50), primary_key=True),
-    Column('status', String(20)),
+    Column('description', String(200)),
     Column('realisation_date', String(200)),
     Column('order_id', String(50), ForeignKey('orders.order_id')),
 )

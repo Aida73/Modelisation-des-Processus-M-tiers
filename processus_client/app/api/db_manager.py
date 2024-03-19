@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from .models import *
 from .db import *
-from sqlalchemy import insert,select
+from sqlalchemy import insert,select, update
 from app.client_tasks import *
 
 
@@ -97,4 +97,24 @@ async def update_order(order_id: str, status:str):
 async def valider_commande(order_id:str, status:str):
     query = orders.update().where(order_id=order_id)
 
+
+async def get_devis_by_id(devis_id:str):
+    query = devis.select(devis.c.devis_id == devis_id)
+    return await database.execute(query=query)
+
+
+async def update_devis(devis_id: str, status:str):
+    query = devis.update().where(devis.c.devis_id == devis_id).values(status=status)
+    return await database.execute(query=query)
     
+    
+async def update_order(order_id: str, update_values: dict):
+    if 'service_delivery_date' in update_values and isinstance(update_values['service_delivery_date'], datetime):
+        update_values['service_delivery_date'] = update_values['service_delivery_date'].isoformat()
+    query = (
+        update(orders)
+        .where(orders.c.order_id == order_id)
+        .values(**update_values)
+    )
+    await database.execute(query)
+    return {"message": "Order updated successfully"}

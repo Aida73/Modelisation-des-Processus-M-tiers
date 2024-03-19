@@ -2,7 +2,7 @@ from fastapi import APIRouter, BackgroundTasks, HTTPException
 from .models import Order
 import requests
 from .db_manager import *
-#from app.provider_tasks import app_prov
+from app.provider_tasks import app_prov
 import httpx
 from .rabbit import RabbitMQSender
 import json
@@ -74,6 +74,7 @@ async def get_orders():
 async def update_existing_order(background_tasks: BackgroundTasks, order_id: str, payload: OrderUpdate):
     update_values = payload.dict(exclude_unset=True)
     background_tasks.add_task(update_ex_order, order_id, update_values)
+    app_prov.send_task("provider_tasks.validate_order",args=[order_id, update_values])
     # if update_values.status=="valide":
     #     app_prov.send_task("client_tasks.validate_order",args=[order_id])
     return {"message": "Order update initiated"}

@@ -41,7 +41,11 @@ class ExistingDevis(BaseModel):
 class Realisation(BaseModel):
     realisation_id: str
     order_id: str
-    status: str
+    description: str
     realisation_date: str
+    
+class OrderUpdate(BaseModel):
+    status: str
+    service_delivery_date: Optional[datetime] = Field(default_factory=datetime.now)
 
 

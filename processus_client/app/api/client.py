@@ -22,6 +22,13 @@ async def save_devis(payload):
 async def modify_devis(devis_id:str, status:str):
     return await update_devis(devis_id, status)
 
+async def update_ex_order(order_id: str, update_values: dict):
+    try:
+        await update_order(order_id, update_values)
+        print("Order updated successfully")
+    except Exception as e:
+        print(f"Failed to update order: {e}")
+
 @router.post("/add_client")
 async def new_client(payload: Client, background_tasks: BackgroundTasks):
     background_tasks.add_task(save_client, payload)
@@ -91,3 +98,10 @@ async def put_devis(devis_id:str, status:str, backgroundtasks: BackgroundTasks):
     }
     return response
     
+@router.put("/orders/{order_id}")
+async def update_existing_order(background_tasks: BackgroundTasks, order_id: str, payload: OrderUpdate):
+    update_values = payload.dict(exclude_unset=True)
+    background_tasks.add_task(update_ex_order, order_id, update_values)
+    # if update_values.status=="valide":
+    #     app_prov.send_task("client_tasks.validate_order",args=[order_id])
+    return {"message": "Order update initiated"}
