@@ -2,7 +2,7 @@ from fastapi import APIRouter, BackgroundTasks, HTTPException
 from .models import Order
 import requests
 from .db_manager import *
-from app.provider_tasks import app_prov
+#from app.provider_tasks import app_prov
 import httpx
 from .rabbit import RabbitMQSender
 import json
@@ -23,6 +23,10 @@ async def save_devis(payload):
 
 async def modify_order(id:str, status: str):
     return await update_order(id, status)
+
+async def modify_devis(id:str, status: str):
+    return await update_devis(id, status)
+
 async def update_ex_order(order_id: str, update_values: dict):
     try:
         await update_order(order_id, update_values)
@@ -42,7 +46,6 @@ def confirm_order(verif_status):
     with httpx.Client() as client:
         response = client.post("client-endponit", json=verif_status)
     print(response.text)
-
 
 
 
@@ -71,8 +74,8 @@ async def get_orders():
 async def update_existing_order(background_tasks: BackgroundTasks, order_id: str, payload: OrderUpdate):
     update_values = payload.dict(exclude_unset=True)
     background_tasks.add_task(update_ex_order, order_id, update_values)
-    if update_values.status=="valide":
-        app_prov.send_task("client_tasks.validate_order",args=[order_id])
+    # if update_values.status=="valide":
+    #     app_prov.send_task("client_tasks.validate_order",args=[order_id])
     return {"message": "Order update initiated"}
 
 
@@ -125,6 +128,13 @@ async def get_devis():
     devis = await get_all_devis()
     return devis
 
+@router.put("/devis")
+async def put_order(devis_id: str, status: str, backgroundtasks: BackgroundTasks):
+    backgroundtasks.add_task(modify_devis, devis_id, status)
+    response = {
+        "message": "Status updated successfully initialized!!!"
+    }  
+    return response
 
 # @router.put("/order")
 # async def put_order(order_id: str, status: str, backgroundtasks: BackgroundTasks):

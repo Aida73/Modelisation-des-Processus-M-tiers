@@ -1,5 +1,6 @@
 from sqlalchemy import (Column, Integer, MetaData, String, Table, DateTime,
                         create_engine, ForeignKey, Boolean)
+from sqlalchemy.orm import sessionmaker
 from databases import Database
 from dotenv import load_dotenv
 import os
@@ -12,6 +13,7 @@ PWD=os.getenv('PROVIDER_PASSWORD')
 DATABASE_URL = f'postgresql://{USERNAME}:{PWD}@provider_db/provider_db'
 engine = create_engine(DATABASE_URL)
 metadata = MetaData()
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 clients = Table(
     'clients',

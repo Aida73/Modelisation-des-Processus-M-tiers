@@ -4,6 +4,8 @@ from .db import *
 from sqlalchemy import insert,select, update
 
 
+
+
 async def add_order(payload: Order):
     order_dict = payload.dict()
     if isinstance(order_dict['order_date'], datetime):
@@ -78,3 +80,5 @@ async def update_devis(devis_id: str, status:str):
 async def update_order(order_id: str, status:str):
     query = orders.update().where(devis.c.devis_id == order_id).values(status=status)
     return await database.execute(query=query)
+
+

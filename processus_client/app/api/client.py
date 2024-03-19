@@ -73,7 +73,7 @@ async def get_devis():
 async def put_devis(devis_id:str, status:str, backgroundtasks: BackgroundTasks):
     backgroundtasks.add_task(modify_devis,devis_id,status)
     if status=="valide":
-        app_cli.send_task("provider_tasks.validate_devis",args=[devis_id])
+        app_cli.send_task("client_tasks.validate_devis",args=[devis_id])
     response = {
         "message": "Status updated successfully"
     }

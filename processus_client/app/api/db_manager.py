@@ -2,6 +2,7 @@ from fastapi import HTTPException
 from .models import *
 from .db import *
 from sqlalchemy import insert,select
+from app.client_tasks import *
 
 
 async def add_client(payload:Client):
@@ -53,7 +54,7 @@ async def get_all_devis():
 
 async def get_devis_by_id(devis_id:str):
     query = devis.select(devis.c.devis_id == devis_id)
-    return await database.execute(query=devis)
+    return await database.execute(query=query)
 
 
 async def update_devis(devis_id: str, status:str):
@@ -71,9 +72,11 @@ async def add_devis(payload:Devis):
 
 async def valider_commande(order_id:str, status:str):
     query = orders.update().where(order_id=order_id)
+
+
 async def get_devis_by_id(devis_id:str):
     query = devis.select(devis.c.devis_id == devis_id)
-    return await database.execute(query=devis)
+    return await database.execute(query=query)
 
 
 async def update_devis(devis_id: str, status:str):
