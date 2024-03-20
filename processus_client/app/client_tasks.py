@@ -13,10 +13,6 @@ logger = logging.getLogger(__name__)
 app_cli = Celery('client_tasks',
              broker='amqp://user:password@rabbitmq:5672')
 
-@app_cli.task
-async def validate_order(order_id,status="valide"):
- return await update_order(order_id, status)
-
 
 @app_cli.task(name='client_tasks.validate_devis')
 def validate_devis(devis_id):
@@ -31,6 +27,18 @@ def validate_devis(devis_id):
         logger.error("Erreur lors de la mise à jour de devis: %s", str(e))
         raise e
     
-
+@app_cli.task(name='client_tasks.update_realisation')
+def validate_devis(realisation_id, values):
+    logger.info("Réception update realisation %s", realisation_id)
+    try:
+        response = requests.put(f"http://processus_fournisseur:8000/realisations/{realisation_id}", json=values)
+        if response.status_code == 200:
+            print("Mise à jour realisation réussie.")
+        else:
+            print(f"Échec de la mise à jour : {response.text}")
+    except Exception as e:
+        logger.error("Erreur lors de la mise à jour de realisation: %s", str(e))
+        raise e
+    
 if __name__ == '__main__':
     app_cli.worker_main()

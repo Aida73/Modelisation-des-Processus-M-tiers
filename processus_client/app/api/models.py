@@ -48,4 +48,6 @@ class OrderUpdate(BaseModel):
     status: str
     service_delivery_date: Optional[datetime] = Field(default_factory=datetime.now)
 
+class RealisationUpdate(BaseModel):
+    description: str
 

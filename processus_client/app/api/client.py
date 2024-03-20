@@ -19,6 +19,9 @@ async def save_client(payload):
 async def save_devis(payload):
     return await add_devis(payload)
 
+async def save_realisation(payload):
+    return await add_realisation(payload)
+
 async def modify_devis(devis_id:str, status:str):
     return await update_devis(devis_id, status)
 
@@ -28,6 +31,13 @@ async def update_ex_order(order_id: str, update_values: dict):
         print("Order updated successfully")
     except Exception as e:
         print(f"Failed to update order: {e}")
+        
+async def update_ex_realisation(realisation_id: str, update_values: dict):
+    try:
+        await update_realisation(realisation_id, update_values)
+        print("Order updated successfully")
+    except Exception as e:
+        print(f"Failed to update realisation: {e}")
 
 @router.post("/add_client")
 async def new_client(payload: Client, background_tasks: BackgroundTasks):
@@ -105,3 +115,25 @@ async def update_existing_order(background_tasks: BackgroundTasks, order_id: str
     # if update_values.status=="valide":
     #     app_prov.send_task("client_tasks.validate_order",args=[order_id])
     return {"message": "Order update initiated"}
+
+@router.post("/add_realisation")
+async def new_client(payload: Realisation, background_tasks: BackgroundTasks):
+    background_tasks.add_task(save_realisation, payload)
+    #id_client = await add_client(payload)
+    response = {
+        'message': f"Realisation successfully added!"
+        }
+    return response
+
+@router.get("/realisations")
+async def get_realisation():
+    realisations = await get_all_realisations()
+    return realisations
+
+
+@router.put("/realisations/{realisation_id}")
+async def update_existing_realisation(background_tasks: BackgroundTasks, realisation_id: str, payload: RealisationUpdate):
+    update_values = payload.dict(exclude_unset=True)
+    background_tasks.add_task(update_ex_realisation, realisation_id, update_values)
+    app_cli.send_task("client_tasks.update_realisation",args=[realisation_id, update_values])
+    return {"message": "Realisation update initiated"}

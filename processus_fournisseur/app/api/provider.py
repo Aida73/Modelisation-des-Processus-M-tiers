@@ -24,8 +24,8 @@ async def save_devis(payload):
 async def modify_order(id:str, status: str):
     return await update_order(id, status)
 
-async def modify_devis(id:str, status: str):
-    return await update_devis(id, status)
+async def save_realisation(payload):
+    return await add_realisation(payload)
 
 async def update_ex_order(order_id: str, update_values: dict):
     try:
@@ -33,6 +33,13 @@ async def update_ex_order(order_id: str, update_values: dict):
         print("Order updated successfully")
     except Exception as e:
         print(f"Failed to update order: {e}")
+        
+async def update_ex_realisation(realisation_id: str, update_values: dict):
+    try:
+        await update_realisation(realisation_id, update_values)
+        print("Order updated successfully")
+    except Exception as e:
+        print(f"Failed to update realisation: {e}")
 
 
 def check_order(order_id: int, background_tasks: BackgroundTasks):
@@ -129,12 +136,13 @@ async def get_devis():
     devis = await get_all_devis()
     return devis
 
-@router.put("/devis")
-async def put_devis(devis_id: str, status: str, backgroundtasks: BackgroundTasks):
-    backgroundtasks.add_task(modify_devis, devis_id, status)
+@router.post("/add_realisation")
+async def new_realisation(payload: Realisation, background_tasks: BackgroundTasks):
+    background_tasks.add_task(save_realisation, payload)
+    response_client = requests.post("http://processus_client:8000/add_realisation", json=payload.dict())
     response = {
-        "message": "Status updated successfully initialized!!!"
-    }  
+        'message': f"Realisation successfully added!"
+        }
     return response
 
 
@@ -173,3 +181,14 @@ async def get_orders_statistiques():
     }
     return response
 
+
+@router.get("/realisations")
+async def get_realisation():
+    realisations = await get_all_realisations()
+    return realisations
+
+@router.put("/realisations/{realisation_id}")
+async def update_existing_realisation(background_tasks: BackgroundTasks, realisation_id: str, payload: RealisationUpdate):
+    update_values = payload.dict(exclude_unset=True)
+    background_tasks.add_task(update_ex_realisation, realisation_id, update_values)
+    return {"message": "Realisation update initiated"}

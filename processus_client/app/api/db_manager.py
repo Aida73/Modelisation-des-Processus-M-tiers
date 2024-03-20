@@ -108,3 +108,20 @@ async def update_order(order_id: str, update_values: dict):
     )
     await database.execute(query)
     return {"message": "Order updated successfully"}
+
+async def add_realisation(payload: Realisation):
+    query = insert(realisations).values(**payload.dict())
+    return await database.execute(query=query)
+
+async def get_all_realisations():
+    query = select(realisations)
+    return await database.fetch_all(query=query)
+
+async def update_realisation(realisation_id: str, update_values: dict):
+    query = (
+        update(realisations)
+        .where(realisations.c.realisation_id == realisation_id)
+        .values(**update_values)
+    )
+    await database.execute(query)
+    return {"message": "Realisation updated successfully"}
