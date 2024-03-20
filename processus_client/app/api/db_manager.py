@@ -80,11 +80,6 @@ async def get_devis_by_client_id(client_id: str):
     return results
 
 
-async def update_order(order_id: str, status:str):
-    query = orders.update().where(devis.c.devis_id == order_id).values(status=status)
-    return await database.execute(query=query)
-
-
 async def update_devis(devis_id: str, status:str):
     query = devis.update().where(devis.c.devis_id == devis_id).values(status=status)
     return await database.execute(query=query)
