@@ -37,7 +37,7 @@ Pour tester les enpoints développées vous pouvez visister les pages:
 - http://localhost:8001/docs pour le processus client
 - http://localhost:8002/docs pour le processus fournisseur
 
-- Lancer l'application web
+- Lancer l'application web localement
 
 Avant le lancement, assurez vous d'ajouter l'application angular comme client au niveau du serveur keycloak(cf demo). Vous utiliserez le fichier de configuration `realm-keycloak-processus-metiers.json` pour configurer keycloak et ajouter des utilisateurs.
 
