@@ -39,6 +39,8 @@ Pour tester les enpoints développées vous pouvez visister les pages:
 
 - Lancer l'application web
 
+Avant le lancement, assurez vous d'ajouter l'application angular comme client au niveau du serveur keycloak(cf demo). Vous utiliserez le fichier de configuration `realm-keycloak-processus-metiers.json` pour configurer keycloak et ajouter des utilisateurs.
+
 ```bash
     cd ui_frontend/ui_frontend
     npm install
