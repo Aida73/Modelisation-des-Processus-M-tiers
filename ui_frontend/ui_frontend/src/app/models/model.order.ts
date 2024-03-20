@@ -8,3 +8,20 @@ export interface Order {
     client_id: string
 }
 
+export interface Devis {
+    "devis_id": string,
+    "status": string,
+    "devis_date": string,
+    "devis_delivery_date": string,
+       "order_id": string
+}
+
+export interface DevisDetail {
+    "devis_id": string,
+    "status": string,
+    "devis_date": string,
+    "devis_delivery_date": string,
+    "order_id": string,
+    "order": Order
+}
+

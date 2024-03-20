@@ -1,24 +1,29 @@
 from fastapi import HTTPException
 from .models import *
 from .db import *
-from sqlalchemy import insert,select, update
+from sqlalchemy import insert,select, update, func
 
 
 
 
 async def add_order(payload: Order):
     order_dict = payload.dict()
+    # if isinstance(order_dict['order_date'], datetime):
+    #     order_dict['order_date'] = order_dict['order_date'].isoformat()
+    
+    # if order_dict['service_delivery_date'] is not None and isinstance(order_dict['service_delivery_date'], datetime):
+    #     order_dict['service_delivery_date'] = order_dict['service_delivery_date'].isoformat()
+
+    # if isinstance(order_dict['order_date'], str):
+    #     order_dict['order_date'] = datetime.fromisoformat(order_dict['order_date'])
+    
+    # if isinstance(order_dict['service_delivery_date'], str):
+    #     order_dict['service_delivery_date'] = datetime.fromisoformat(order_dict['service_delivery_date'])
     if isinstance(order_dict['order_date'], datetime):
         order_dict['order_date'] = order_dict['order_date'].isoformat()
-    
     if order_dict['service_delivery_date'] is not None and isinstance(order_dict['service_delivery_date'], datetime):
         order_dict['service_delivery_date'] = order_dict['service_delivery_date'].isoformat()
 
-    if isinstance(order_dict['order_date'], str):
-        order_dict['order_date'] = datetime.fromisoformat(order_dict['order_date'])
-    
-    if isinstance(order_dict['service_delivery_date'], str):
-        order_dict['service_delivery_date'] = datetime.fromisoformat(order_dict['service_delivery_date'])
     query = orders.insert().values(**order_dict)
     print("query",query)
     return await database.execute(query=query)
@@ -78,3 +83,22 @@ async def update_devis(devis_id: str, status:str):
     return await database.execute(query=query)
 
 
+async def get_pending_devis():
+    query = select(devis).where(devis.c.status == "pending")
+    return await database.fetch_all(query=query) 
+
+async def get_confirmed_devis():
+    query = select(devis).where(devis.c.status == "confirmed")
+    return await database.fetch_all(query=query) 
+
+async def get_orders_pending():
+    query = select(orders).where(orders.c.status == "pending")
+    return await database.fetch_all(query=query) 
+
+async def get_orders_confirmed():
+    query = select(orders).where(orders.c.status == "realise")
+    return await database.fetch_all(query=query) 
+
+async def get_orders_realized():
+    query = select(orders).where(orders.c.status == "valide")
+    return await database.fetch_all(query=query) 

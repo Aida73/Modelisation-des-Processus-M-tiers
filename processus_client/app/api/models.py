@@ -15,14 +15,14 @@ class Order(BaseModel):
     order_id: str
     service: str
     status: str
-    order_date: datetime #= Field(default_factory=datetime.now(datetime.timezone.utc))
+    order_date: Optional[datetime] = Field(default_factory=datetime.now)
     service_delivery_date: Optional[datetime] = None
     client_id: str
 
 
 class Devis(BaseModel):
     devis_id: str
-    order_id: Order
+    order_id: str
     status: str
     devis_date: str
     devis_delivery_date: str

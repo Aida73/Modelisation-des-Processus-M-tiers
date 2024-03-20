@@ -59,16 +59,6 @@ async def get_devis_by_id(devis_id:str):
     order_result = await database.fetch_one(order_query)
     devis_result = dict(devis_result)
     devis_result['order']=order_result
-    #{
-    #     "devis_id": devis_result["devis_id"],
-    #     "status": devis_result["status"],
-    #     "devis_date": devis_result["devis_date"],
-    #     "devis_delivery_date": devis_result["devis_delivery_date"],
-    #     "order_id": {
-    #         "order_id": order_result["order_id"],
-    #         "client_id": order_result["client_id"],
-    #     }
-    # }
     return devis_result
 
 async def update_devis(devis_id: str, status:str):

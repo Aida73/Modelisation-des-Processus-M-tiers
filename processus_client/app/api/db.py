@@ -28,14 +28,25 @@ clients = Table(
     Column('username', String(20)),  
 )
 
+# orders = Table(
+#     'orders',
+#     metadata,
+#     Column('order_id', String(50), primary_key=True),
+#     Column('status', String(20)),
+#     Column('service', String(200)),
+#     Column('order_date', type_=TIMESTAMP(timezone=True)),
+#     Column('service_delivery_date', type_=TIMESTAMP(timezone=True)),  
+#     Column('client_id', String(50), ForeignKey('clients.client_id')),
+# )
+
 orders = Table(
     'orders',
     metadata,
     Column('order_id', String(50), primary_key=True),
     Column('status', String(20)),
     Column('service', String(200)),
-    Column('order_date', type_=TIMESTAMP(timezone=True)),
-    Column('service_delivery_date', type_=TIMESTAMP(timezone=True)),  
+    Column('order_date', DateTime, nullable=True),
+    Column('service_delivery_date', DateTime, nullable=True),  
     Column('client_id', String(50), ForeignKey('clients.client_id')),
 )
 

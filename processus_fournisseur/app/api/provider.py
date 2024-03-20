@@ -137,13 +137,39 @@ async def put_devis(devis_id: str, status: str, backgroundtasks: BackgroundTasks
     }  
     return response
 
-# @router.put("/order")
-# async def put_order(order_id: str, status: str, backgroundtasks: BackgroundTasks):
-#     backgroundtasks.add_task(modify_order, order_id, status)
-#     if status=="valide":
-#         app_prov.send_tasks("client_tasks.validate_order")
-#     response = {
-#         "message": "Status updated successfully!!!"
-#     }
-    
-#     return response
+
+@router.get("/statistics")
+async def get_statistiques():
+    devis = await get_all_devis()
+    clients = await get_all_clients()
+    orders = await get_all_orders()
+
+    response = {
+        "devis": len(devis),
+        "clients": len(clients),
+        "orders": len(orders)
+    }
+    return response
+
+@router.get("/devis/statistics")
+async def get_devis_statistiques():
+    r1 = await get_pending_devis()
+    r2 = await get_confirmed_devis()
+    response = {
+        "confirmed": len(r1),
+        "pending": len(r2)
+    }
+    return response
+
+@router.get("/orders/statistics")
+async def get_orders_statistiques():
+    r1 = await get_orders_pending()
+    r2 = await get_orders_confirmed()
+    r3 = await get_orders_realized()
+    response = {
+        "pending": len(r1)
+        #"valide": len(r2),
+        #"realise": len(r3)
+    }
+    return response
+

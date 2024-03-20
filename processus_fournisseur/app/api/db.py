@@ -28,7 +28,7 @@ orders = Table(
     Column('order_id', String(50), primary_key=True),
     Column('status', String(20)),
     Column('service', String(200)),
-    Column('order_date', DateTime),
+    Column('order_date', DateTime, nullable=True),
     Column('service_delivery_date', DateTime, nullable=True),  
     Column('client_id', String(50), ForeignKey('clients.client_id')),
 )
