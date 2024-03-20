@@ -69,6 +69,7 @@ async def add_devis(payload:Devis):
     query = devis.insert().values(**payload.dict())
     return await database.execute(query=query)
 
+
 async def get_devis_by_client_id(client_id: str):
     query = select([devis]).select_from(
         devis.join(orders, devis.c.order_id == orders.c.order_id)
@@ -78,18 +79,9 @@ async def get_devis_by_client_id(client_id: str):
     
     return results
 
+
 async def update_order(order_id: str, status:str):
     query = orders.update().where(devis.c.devis_id == order_id).values(status=status)
-    return await database.execute(query=query)
-
-
-
-async def valider_commande(order_id:str, status:str):
-    query = orders.update().where(order_id=order_id)
-
-
-async def get_devis_by_id(devis_id:str):
-    query = devis.select(devis.c.devis_id == devis_id)
     return await database.execute(query=query)
 
 

@@ -169,15 +169,13 @@ async def get_devis_statistiques():
     }
     return response
 
-@router.get("/orders/statistics")
+@router.get("/statistics/orders")
 async def get_orders_statistiques():
-    r1 = await get_orders_pending()
-    r2 = await get_orders_confirmed()
-    r3 = await get_orders_realized()
+    r1 = await get_pending_devis()
+    r2 = await get_confirmed_devis()
     response = {
-        "pending": len(r1)
-        #"valide": len(r2),
-        #"realise": len(r3)
+        "confirmed": len(r1),
+        "pending": len(r2)
     }
     return response
 

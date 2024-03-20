@@ -1,194 +1,196 @@
-<div class="row">
-  <ng-container> 
-  <!-- *ngIf="runStatusStatsDaily$ | async as runStatusStatsDaily"> -->
-  <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-    <div class="card">
-      <div class="card-body p-3">
-        <div class="row">
-          <div class="col-8">
-            <div class="numbers">
-              <div class="text-sm mb-0 text-capitalize font-weight-bold">
-                <h3>Nombre de Clients</h3>
-                <h1 class="font-weight-bolder mb-0 text-primary" style="font-size: xx-large">3</h1>
-              </div>
-              <h5 class="font-weight-bolder mb-0">
-                <!-- {{runStatusStatsDaily.pending}} -->
-                <!-- <span class="text-success text-sm font-weight-bolder"
-                  >+55%</span
-                > -->
-              </h5>
-            </div>
-          </div>
-          <div class="col-4 text-end">
-            <div
-              class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md"
-            >
-              <i class="fa fa-spinner" aria-hidden="true"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-    <div class="card">
-      <div class="card-body p-3">
-        <div class="row">
-          <div class="col-8">
-            <div class="numbers">
-              <div class="text-sm mb-0 text-capitalize font-weight-bold">
-                <h3>Commandes</h3>
-                <h1 class="font-weight-bolder mb-0 text-primary" style="font-size: xx-large">3</h1>
-              </div>
-              <h5 class="font-weight-bolder mb-0">
-                <!-- {{runStatusStatsDaily.failed}} -->
-                <!-- <span class="text-success text-sm font-weight-bolder">+3%</span> -->
-              </h5>
-            </div>
-          </div>
-          <div class="col-4 text-end">
-            <div
-              class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md"
-            >
-            <i class="fa fa-chain-broken" aria-hidden="true"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-xl-3 col-sm-6">
-    <div class="card">
-      <div class="card-body p-3">
-        <div class="row">
-          <div class="col-8">
-            <div class="numbers">
-              <div class="text-sm mb-0 text-capitalize font-weight-bold">
-                <h3>Nombre de devis</h3>
-                <h1 class="font-weight-bolder mb-0 text-primary" style="font-size: xx-large">3</h1>
-              </div>
-              
-              <h5 class="font-weight-bolder mb-0">
-                <!-- {{runStatusStatsDaily.finish}} -->
-              </h5>
-            </div>
-          </div>
-          <div class="col-4 text-end">
-            <div
-              class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md"
-            >
-                <i class="fa fa-check" aria-hidden="true"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-    <div class="card">
-      <div class="card-body p-3">
-        <div class="row">
-          <div class="col-8">
-            <div class="numbers">
-              <div class="text-sm mb-0 text-capitalize font-weight-bold">
-                <h3>Retours Clients</h3>
-                <h1 class="font-weight-bolder mb-0 text-primary" style="font-size: xx-large">3</h1>
-              </div>
-              <h5 class="font-weight-bolder mb-0">
-                <!-- {{runStatusStatsDaily.failed + runStatusStatsDaily.finish + runStatusStatsDaily.pending}} -->
-                <!-- <span class="text-danger text-sm font-weight-bolder">-2%</span> -->
-              </h5>
-            </div>
-          </div>
-          <div class="col-4 text-end">
-            <div
-              class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md"
-            >
-            <i class="fa fa-line-chart" aria-hidden="true"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  </ng-container> 
-</div>
-
-<div class="row mt-4">
-    <div class="col-lg-6">
-      <div class="card z-index-2">
-        <div class="card-header pb-0">
-          <h6>Répartition du nombre de séquenceur par type </h6>
-          <p class="text-sm">
-            <i class="fa fa-arrow-up text-success"></i>
-            <!-- <span class="font-weight-bold">4% more</span> in 2021 -->
-          </p>
-        </div>
+<div>
+  <div class="row dash">
+    <ng-container *ngIf="stats$ | async as stats"> 
+    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+      <div class="card">
         <div class="card-body p-3">
-          <div class="card" class="chart-canvas" height="300" style="height: 300px;">  
-              <p-chart height="300px" type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
+          <div class="row">
+            <div class="col-8">
+              <div class="numbers">
+                <div class="text-sm mb-0 text-capitalize font-weight-bold">
+                  <h3>Nombre de Clients</h3>
+                  <h1 class="font-weight-bolder mb-0 text-primary" style="font-size: xx-large">{{stats.clients}}</h1>
+                </div>
+                <h5 class="font-weight-bolder mb-0">
+                  <!-- {{runStatusStatsDaily.pending}} -->
+                  <!-- <span class="text-success text-sm font-weight-bolder"
+                    >+55%</span
+                  > -->
+                </h5>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div
+                class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md"
+              >
+                <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="col-lg-6">
+    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-8">
+              <div class="numbers">
+                <div class="text-sm mb-0 text-capitalize font-weight-bold">
+                  <h3>Commandes</h3>
+                  <h1 class="font-weight-bolder mb-0 text-primary" style="font-size: xx-large">{{stats.orders}}</h1>
+                </div>
+                <h5 class="font-weight-bolder mb-0">
+                  <!-- {{runStatusStatsDaily.failed}} -->
+                  <!-- <span class="text-success text-sm font-weight-bolder">+3%</span> -->
+                </h5>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div
+                class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md"
+              >
+              <i class="fa fa-chain-broken" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-sm-6">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-8">
+              <div class="numbers">
+                <div class="text-sm mb-0 text-capitalize font-weight-bold">
+                  <h3>Nombre de devis</h3>
+                  <h1 class="font-weight-bolder mb-0 text-primary" style="font-size: xx-large">{{stats.devis}}</h1>
+                </div>
+                
+                <h5 class="font-weight-bolder mb-0">
+                  <!-- {{runStatusStatsDaily.finish}} -->
+                </h5>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div
+                class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md"
+              >
+                  <i class="fa fa-check" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-8">
+              <div class="numbers">
+                <div class="text-sm mb-0 text-capitalize font-weight-bold">
+                  <h3>Retours Clients</h3>
+                  <h1 class="font-weight-bolder mb-0 text-primary" style="font-size: xx-large">3</h1>
+                </div>
+                <h5 class="font-weight-bolder mb-0">
+                  <!-- {{runStatusStatsDaily.failed + runStatusStatsDaily.finish + runStatusStatsDaily.pending}} -->
+                  <!-- <span class="text-danger text-sm font-weight-bolder">-2%</span> -->
+                </h5>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div
+                class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md"
+              >
+              <i class="fa fa-line-chart" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    </ng-container> 
+  </div>
+  
+  <div class="row mt-4 container-chart">
+      <div class="col-lg-6">
         <div class="card z-index-2">
           <div class="card-header pb-0">
-            <h6>Répartition des runs en fonction du status </h6>
+            <h3>Nombre de commandes en fonction du status </h3>
             <p class="text-sm">
               <i class="fa fa-arrow-up text-success"></i>
+              <!-- <span class="font-weight-bold">4% more</span> in 2021 -->
             </p>
           </div>
           <div class="card-body p-3">
             <div class="card" class="chart-canvas" height="300" style="height: 300px;">  
-                <!-- <p-chart height="300px" type="doughnut" [data]="runStatusGlobalStats" [options]="RunStatusOptions"></p-chart> -->
+                <p-chart height="300px" type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
             </div>
           </div>
         </div>
-  </div>
-
-  <div class="row mt-4">
-    <div class="col-lg-12">
-      <div class="card z-index-2">
-        <div class="card-header pb-0">
-          <h6>Répartition du nombre de runs complets et interrompus pour chaque séquenceur</h6>
-          <p class="text-sm">
-            <i class="fa fa-arrow-up text-success"></i>
-            <!-- <span class="font-weight-bold">4% more</span> in 2021 -->
-          </p>
-        </div>
-        <div class="card-body p-3">
-          <div class="card" class="chart-canvas" height="300" style="height: 300px;">  
-              <!-- <p-chart height="300px" type="bar" [data]="sequencerTypeStats" [options]="sequencerRunsDataOptions"></p-chart> -->
+      </div>
+  
+      <div class="col-lg-6">
+          <div class="card z-index-2">
+            <div class="card-header pb-0">
+              <h3>Nombre de devis en fonction du status </h3>
+              <p class="text-sm">
+                <i class="fa fa-arrow-up text-success"></i>
+              </p>
+            </div>
+            <div class="card-body p-3">
+              <div class="card" class="chart-canvas" height="300" style="height: 300px;">  
+                <p-chart height="300px" type="doughnut" [data]="statsGlobalStats" [options]="statsOptions"></p-chart>
+              </div>
+            </div>
+          </div>
+    </div>
+  
+    <div class="row mt-4">
+      <div class="col-lg-12">
+        <div class="card z-index-2">
+          <div class="card-header pb-0">
+            <h3>Répartition du nombre de commandes passées en fonction de leur état</h3>
+            <p class="text-sm">
+              <i class="fa fa-arrow-up text-success"></i>
+              <!-- <span class="font-weight-bold">4% more</span> in 2021 -->
+            </p>
+          </div>
+          <div class="card-body p-3">
+            <div class="card" class="chart-canvas" height="300" style="height: 300px;">  
+                <!-- <p-chart height="300px" type="bar" [data]="sequencerTypeStats" [options]="sequencerRunsDataOptions"></p-chart> -->
+            </div>
           </div>
         </div>
       </div>
     </div>
+    
+    
   </div>
   
+  
+  
+  
+  
+  <!-- <div class="container p-4 shadow">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <h3 class="text-center">
+          Résumé de toutes les activités de la plateforme
+        </h3>
+        <p>
+          Peut contenir le nombre de réalisations, de commandes passées, de
+          clients, etc.
+        </p>
+      </div>
+    </div>
+  
+    <div class="card">
+      <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
+    </div>
+  </div> -->
   
 </div>
-
-
-
-
-
-<!-- <div class="container p-4 shadow">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <h3 class="text-center">
-        Résumé de toutes les activités de la plateforme
-      </h3>
-      <p>
-        Peut contenir le nombre de réalisations, de commandes passées, de
-        clients, etc.
-      </p>
-    </div>
-  </div>
-
-  <div class="card">
-    <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
-  </div>
-</div> -->
